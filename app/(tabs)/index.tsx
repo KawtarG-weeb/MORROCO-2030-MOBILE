@@ -6,7 +6,7 @@ export default function HomeTab() {
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
-        source={require("@/assets/images/wc.jpg")}
+        source={require("@/assets/images/wc.png")}
         style={styles.hero}
       >
         <View style={styles.overlay} />
