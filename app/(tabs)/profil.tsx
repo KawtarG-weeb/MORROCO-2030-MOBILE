@@ -1,66 +1,135 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 
 export default function ProfileTab() {
   return (
-    <View style={styles.container}>
-      <View style={styles.avatar}>
-        <Text style={styles.avatarText}>👤</Text>
+    <ScrollView
+      contentContainerStyle={styles.container}
+      showsVerticalScrollIndicator={false}
+    >
+      {/* HEADER */}
+      <View style={styles.header}>
+        <View style={styles.avatar}>
+          <Text style={styles.avatarText}>👤</Text>
+        </View>
+        <Text style={styles.name}>Nom d'utilisateur</Text>
+        <Text style={styles.email}>user@email.com</Text>
       </View>
 
-      <Text style={styles.name}>Nom d'utilisateur</Text>
-
-      {[
-        "Modifier mon profil",
-        "Modifier mon mot de passe",
-        "Langue des notifications",
-        "Supprimer mon compte",
-      ].map(item => (
-        <TouchableOpacity key={item} style={styles.item}>
-          <Text>{item}</Text>
-        </TouchableOpacity>
-      ))}
-
-      <TouchableOpacity style={styles.logout}>
-        <Text style={{ color: "#cff2f1ff" }}>Déconnexion</Text>
+      {/* ACTIONS */}
+      <TouchableOpacity style={styles.card}>
+        <Text style={styles.cardIcon}>👤</Text>
+        <Text style={styles.cardText}>Modifier mon profil</Text>
       </TouchableOpacity>
-    </View>
+
+      <TouchableOpacity style={styles.card}>
+        <Text style={styles.cardIcon}>🔒</Text>
+        <Text style={styles.cardText}>Modifier mon mot de passe</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.card}>
+        <Text style={styles.cardIcon}>🌍</Text>
+        <Text style={styles.cardText}>Langue des notifications</Text>
+        <Text style={styles.cardValue}>Français</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={[styles.card, styles.dangerCard]}>
+         <Text style={styles.cardIcon}>🗑️</Text>
+        <Text style={styles.cardText}>Supprimer mon compte</Text>
+        
+      </TouchableOpacity>
+      
+
+      {/* LOGOUT */}
+      <TouchableOpacity style={styles.logout}>
+        <Text style={styles.logoutText}>Déconnexion</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
+/* ================= STYLES ================= */
+
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    backgroundColor: "#F5F5DC",
+    padding: 16,
+    paddingBottom: 120, // évite que la TabBar cache le contenu
   },
+
+  header: {
+    alignItems: "center",
+    marginBottom: 24,
+  },
+
   avatar: {
-    alignSelf: "center",
-    width: 100,
-    height: 100,
-    borderRadius: 50,
+    width: 90,
+    height: 90,
+    borderRadius: 45,
     borderWidth: 3,
     borderColor: "#7A1F16",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 12,
+    marginBottom: 8,
   },
+
   avatarText: {
-    fontSize: 40,
+    fontSize: 36,
   },
+
   name: {
-    textAlign: "center",
     fontSize: 18,
-    marginBottom: 20,
+    fontWeight: "bold",
+    color: "#000",
   },
-  item: {
-    padding: 16,
-    backgroundColor: "#F5F5F5",
-    borderRadius: 12,
-    marginBottom: 10,
+
+  email: {
+    fontSize: 14,
+    color: "#555",
   },
+
+  card: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#86261eff",
+    borderRadius: 16,
+    padding: 18,
+    marginBottom: 14,
+  },
+
+  cardIcon: {
+    fontSize: 22,
+    marginRight: 12,
+    color: "#a25656ff",
+  },
+
+  cardText: {
+    flex: 1,
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+  cardValue: {
+    color: "#FFD9C9",
+    fontWeight: "bold",
+  },
+
+  dangerCard: {
+    backgroundColor: "rgba(155, 48, 39, 1)",
+  },
+
   logout: {
     marginTop: 20,
-    backgroundColor: "#C0392B",
-    padding: 16,
-    borderRadius: 12,
+    backgroundColor: "#8e291eff",
+    borderRadius: 16,
+    padding: 18,
     alignItems: "center",
+  },
+
+  logoutText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });

@@ -1,66 +1,172 @@
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { StyleSheet, Text, View } from "react-native";
-import Animated, { FadeInUp } from "react-native-reanimated";
+import { useState } from "react";
+
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
+import { cities } from "@/data/cities";
+import { monuments } from "@/data/monuments";
+
+
+
 
 export default function ItineraryScreen() {
-  const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme ?? "light"];
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+
+  const city = cities.find((c) => c.id === selectedCity);
+  const cityMonuments = monuments.filter(
+    (m) => m.cityId === selectedCity
+  );
+
+  const createItinerary = () => {
+    if (!selectedCity || cityMonuments.length === 0) {
+      Alert.alert(
+        "Itinéraire incomplet",
+        "Veuillez sélectionner une ville."
+      );
+      return;
+    }
+
+    const message =
+      `Ville : ${city?.name}\n` +
+      `Monuments :\n` +
+      cityMonuments.map((m) => `- ${m.name}`).join("\n") +
+      `\n\nDurée estimée : ${cityMonuments.length} jour(s)`;
+
+    Alert.alert("Votre itinéraire", message);
+  };
 
   return (
-    <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Animated.Text
-        entering={FadeInUp.duration(700)}
-        style={[styles.title, { color: theme.text }]}
-      >
-        Itinerary Planner
-      </Animated.Text>
+    <ScrollView contentContainerStyle={styles.container}>
+      {/* HEADER */}
+      <Text style={styles.title}>Itinerary Planner</Text>
+      <Text style={styles.subtitle}>
+        Planifiez votre voyage au Maroc pour la Coupe du Monde 2030
+      </Text>
 
-      <Animated.Text
-        entering={FadeInUp.delay(200).duration(700)}
-        style={[styles.text, { color: theme.text }]}
-      >
-        Plan your trip across Morocco for the 2030 World Cup.
-        {"\n\n"}
-        Choose cities, discover monuments, and build your personalized journey.
-      </Animated.Text>
+      {/* CITIES */}
+      <Text style={styles.sectionTitle}>Choisir une ville</Text>
 
-      <Animated.View
-        entering={FadeInUp.delay(400).duration(700)}
-        style={styles.box}
-      >
-        <Text style={styles.boxText}>Feature coming soon</Text>
-      </Animated.View>
-    </View>
+      <View style={styles.grid}>
+        {cities.map((c) => (
+          <TouchableOpacity
+            key={c.id}
+            style={[
+              styles.cityCard,
+              selectedCity === c.id && styles.cityActive,
+            ]}
+            onPress={() => setSelectedCity(c.id)}
+          >
+            <Text
+              style={[
+                styles.cityText,
+                selectedCity === c.id && styles.cityTextActive,
+              ]}
+            >
+              {c.name}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+
+      {/* MONUMENTS */}
+      {selectedCity && (
+        <>
+          <Text style={styles.sectionTitle}>Monuments à visiter</Text>
+
+          {cityMonuments.map((m) => (
+            <View key={m.id} style={styles.monumentCard}>
+              <Text style={styles.monumentName}>{m.name}</Text>
+              <Text style={styles.monumentDesc}>{m.description}</Text>
+            </View>
+          ))}
+        </>
+      )}
+
+      {/* ACTION */}
+      <TouchableOpacity style={styles.button} onPress={createItinerary}>
+        <Text style={styles.buttonText}>Créer mon itinéraire</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 24,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: "#F5F5DC",
   },
   title: {
     fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 16,
+    color: "#7A1F16",
     textAlign: "center",
+    marginBottom: 6,
   },
-  text: {
-    fontSize: 16,
+  subtitle: {
     textAlign: "center",
-    lineHeight: 24,
-    marginBottom: 32,
+    color: "#555",
+    marginBottom: 28,
   },
-  box: {
-    padding: 20,
-    borderRadius: 12,
-    backgroundColor: "#C1272D",
-  },
-  boxText: {
-    color: "#FFFFFF",
+  sectionTitle: {
+    fontSize: 20,
     fontWeight: "600",
+    color: "#7A1F16",
+    marginBottom: 12,
+  },
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    gap: 14,
+    marginBottom: 24,
+  },
+  cityCard: {
+    backgroundColor: "#fff",
+    padding: 14,
+    borderRadius: 14,
+    minWidth: "47%",
+    alignItems: "center",
+  },
+  cityActive: {
+    backgroundColor: "#7A1F16",
+  },
+  cityText: {
+    fontWeight: "600",
+    color: "#000",
+  },
+  cityTextActive: {
+    color: "#fff",
+  },
+  monumentCard: {
+    backgroundColor: "#fff",
+    padding: 16,
+    borderRadius: 14,
+    marginBottom: 12,
+  },
+  monumentName: {
+    fontWeight: "bold",
+    color: "#7A1F16",
+    marginBottom: 4,
+  },
+  monumentDesc: {
+    color: "#555",
+    fontSize: 14,
+  },
+  button: {
+    backgroundColor: "#7A1F16",
+    padding: 18,
+    borderRadius: 20,
+    marginTop: 30,
+    alignItems: "center",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });

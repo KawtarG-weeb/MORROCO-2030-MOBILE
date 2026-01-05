@@ -10,15 +10,15 @@ export default function LanguageModal() {
         <View style={styles.box}>
           <Text style={styles.title}>Sélectionner la langue</Text>
 
-          {(["AR", "FR", "EN"] as const).map(l => (
+          {(["ar", "fr", "en"] as const).map(l => (
             <TouchableOpacity
               key={l}
               style={[
                 styles.option,
-                l === lang && styles.selected
+                 styles.selected
               ]}
               onPress={() => {
-                setLang(l);
+               
                 close();
               }}
             >
