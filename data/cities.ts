@@ -7,29 +7,11 @@ export interface City {
   climate: string;
   languages: string[];
   tips: string[];
-  image?: string;
+  image?: any;
 }
 
 export const cities: City[] = [
-  {
-    id: "casablanca",
-    name: "Casablanca",
-    description:
-      "Casablanca est la plus grande ville du Maroc. C’est le centre économique du pays et une ville très moderne. Vous y trouvez un mélange entre architecture Art déco, quartiers d’affaires, corniche et plages. La ville est aussi connue pour sa vie nocturne, ses cafés, ses centres commerciaux et son tramway pratique.",
-    history:
-      "Le site était connu sous le nom d’Anfa. La ville s’est développée fortement au 19ème et 20ème siècle, surtout pendant le protectorat français. Casablanca est devenue un grand port et un pôle industriel. Aujourd’hui, elle reste la porte d’entrée business du Maroc, avec une identité urbaine très marquée.",
-    specialties: ["Fruits de mer", "Poisson grillé", "Pastilla", "Couscous", "Thé à la menthe"],
-    climate: "Océanique à influence méditerranéenne, doux en hiver, chaud et humide en été.",
-    languages: ["Arabe", "Français", "Amazigh"],
-    tips: [
-      "Visitez la Mosquée Hassan II tôt le matin pour éviter l’affluence",
-      "Marchez sur la Corniche d’Aïn Diab au coucher du soleil",
-      "Explorez le centre-ville Art déco autour du boulevard Mohammed V",
-      "Utilisez le tramway pour vous déplacer facilement",
-      "Prévoyez une veste légère le soir, même en été",
-    ],
-    image: "https://sl.bing.net/fAt4oUtUT48",
-  },
+  
   {
     id: "rabat",
     name: "Rabat",
@@ -50,6 +32,26 @@ export const cities: City[] = [
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/Rabat_Kasbah_Oudayas_%282%29.jpg",
   },
   {
+    id: "casablanca",
+    name: "Casablanca",
+    description:
+      "Casablanca est la plus grande ville du Maroc. C’est le centre économique du pays et une ville très moderne. Vous y trouvez un mélange entre architecture Art déco, quartiers d’affaires, corniche et plages. La ville est aussi connue pour sa vie nocturne, ses cafés, ses centres commerciaux et son tramway pratique.",
+    history:
+      "Le site était connu sous le nom d’Anfa. La ville s’est développée fortement au 19ème et 20ème siècle, surtout pendant le protectorat français. Casablanca est devenue un grand port et un pôle industriel. Aujourd’hui, elle reste la porte d’entrée business du Maroc, avec une identité urbaine très marquée.",
+    specialties: ["Fruits de mer", "Poisson grillé", "Pastilla", "Couscous", "Thé à la menthe"],
+    climate: "Océanique à influence méditerranéenne, doux en hiver, chaud et humide en été.",
+    languages: ["Arabe", "Français", "Amazigh"],
+    tips: [
+      "Visitez la Mosquée Hassan II tôt le matin pour éviter l’affluence",
+      "Marchez sur la Corniche d’Aïn Diab au coucher du soleil",
+      "Explorez le centre-ville Art déco autour du boulevard Mohammed V",
+      "Utilisez le tramway pour vous déplacer facilement",
+      "Prévoyez une veste légère le soir, même en été",
+    ],
+ image: "https://upload.wikimedia.org/wikipedia/commons/6/63/Ain_Diab_Corniche_Casablanca.jpg",
+
+  },
+  {
     id: "marrakech",
     name: "Marrakech",
     description:
@@ -67,6 +69,8 @@ export const cities: City[] = [
       "Choisissez un guide officiel si vous voulez une visite historique détaillée",
     ],
     image: "https://commons.wikimedia.org/wiki/Special:FilePath/Jemaa_el-Fnaa_at_night_-_Maroco_-_Marrakesh.jpg",
+  
+  
   },
   {
     id: "tanger",

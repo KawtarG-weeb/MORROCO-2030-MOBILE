@@ -5,8 +5,9 @@ export interface Monument {
   description: string;
   hours: string;
   price: string;
-  location: string; // Google Maps link or coordinates
-  photos: string[]; // URLs
+  location: string; 
+  photos: string[]; 
+  status?: "open" | "repair" | "closed";
 }
 
 export const monuments: Monument[] = [
@@ -19,8 +20,9 @@ export const monuments: Monument[] = [
     price: 'Gratuit pour les non-musulmans',
     location: 'https://maps.google.com/?q=Mosquée+Hassan+II',
     photos: ['https://example.com/hassan2.jpg'],
+    
   },
-  {
+  { 
     id: 'jemaa',
     name: 'Place Jemaa el-Fna',
     cityId: 'marrakech',

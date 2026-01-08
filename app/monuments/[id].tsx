@@ -1,7 +1,9 @@
 import { Image } from "expo-image";
 import { useLocalSearchParams } from "expo-router";
+import { openGoogleMaps } from "../src/services/openGoogleMaps";
+
 import {
-  Linking,
+  Alert,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
@@ -27,16 +29,33 @@ export default function MonumentDetailScreen() {
     );
   }
 
+  // ✅ STATUS PAR DÉFAUT
+  const status = monument.status ?? "open";
+
+  const destination = `${monument.name}, ${city?.name}`;
+
+  const handleOpenMap = () => {
+    if (status === "repair") {
+      Alert.alert(
+        "Monument en réparation",
+        "Ce monument est actuellement en réparation. Souhaitez-vous quand même afficher l’itinéraire ?",
+        [
+          { text: "Annuler", style: "cancel" },
+          { text: "Continuer", onPress: () => openGoogleMaps(destination) },
+        ]
+      );
+    } else {
+      openGoogleMaps(destination);
+    }
+  };
+
   return (
     <ScrollView
-  style={styles.page}
-  contentContainerStyle={styles.scrollContainer}
-  showsVerticalScrollIndicator={false}
->
-
-      {/* CARTE CENTRÉE */}
+      style={styles.page}
+      contentContainerStyle={styles.scrollContainer}
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.card}>
-        {/* IMAGE */}
         <Image
           source={{
             uri: monument.photos?.[0] || "https://via.placeholder.com/900x500",
@@ -45,30 +64,47 @@ export default function MonumentDetailScreen() {
           contentFit="cover"
         />
 
-        {/* TITRE */}
         <ThemedText style={styles.title}>
           {monument.name}
         </ThemedText>
+
+        {/* ✅ STATUS */}
+        <View style={styles.statusRow}>
+          <View
+            style={[
+              styles.statusDot,
+              status === "open" && styles.dotOpen,
+              status === "repair" && styles.dotRepair,
+              status === "closed" && styles.dotClosed,
+            ]}
+          />
+          <ThemedText style={styles.statusText}>
+            {status === "open" && "Ouvert"}
+            {status === "repair" && "En réparation"}
+            {status === "closed" && "Fermé"}
+          </ThemedText>
+        </View>
 
         <ThemedText style={styles.city}>
           {city?.name}
         </ThemedText>
 
-        {/* DESCRIPTION */}
         <ThemedText style={styles.description}>
           {monument.description}
         </ThemedText>
 
-        {/* INFOS */}
         <View style={styles.infoBox}>
           <Info label="Horaires" value={monument.hours} />
           <Info label="Prix d'entrée" value={monument.price} />
         </View>
 
-        {/* BOUTON MAP */}
         <TouchableOpacity
-          style={styles.mapButton}
-          onPress={() => Linking.openURL(monument.location)}
+          style={[
+            styles.mapButton,
+            status === "closed" && { opacity: 0.5 },
+          ]}
+          disabled={status === "closed"}
+          onPress={handleOpenMap}
         >
           <ThemedText style={styles.mapText}>
             Voir sur Google Maps
@@ -79,7 +115,6 @@ export default function MonumentDetailScreen() {
   );
 }
 
-/* --------- COMPOSANT INFO --------- */
 function Info({ label, value }: { label: string; value: string }) {
   return (
     <View style={styles.infoRow}>
@@ -89,15 +124,9 @@ function Info({ label, value }: { label: string; value: string }) {
   );
 }
 
-/* --------- STYLES --------- */
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: "#F2F2F2", // gris clair, plus jaune
-  },
-
-  pageContent: {
-    alignItems: "center", // centre horizontalement
-    paddingVertical: 40,
+    backgroundColor: "#F2F2F2",
   },
 
   center: {
@@ -120,7 +149,7 @@ const styles = StyleSheet.create({
 
   image: {
     width: "100%",
-    height: 60,
+    height: 180,
     borderRadius: 16,
     marginBottom: 24,
   },
@@ -131,6 +160,38 @@ const styles = StyleSheet.create({
     color: "#7A1F16",
     textAlign: "center",
     marginBottom: 6,
+  },
+
+  statusRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 14,
+    gap: 8,
+  },
+
+  statusDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+
+  dotOpen: {
+    backgroundColor: "#2E7D32",
+  },
+
+  dotRepair: {
+    backgroundColor: "#F9A825",
+  },
+
+  dotClosed: {
+    backgroundColor: "#C62828",
+  },
+
+  statusText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#555",
   },
 
   city: {
@@ -179,16 +240,17 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignItems: "center",
   },
-scrollContainer: {
-  flexGrow: 1,
-  alignItems: "center",     // centré horizontalement
-  paddingTop: 60,           // espace contrôlé en haut
-  paddingBottom: 40,
-},
 
   mapText: {
     color: "#FFFFFF",
     fontSize: 15,
     fontWeight: "600",
+  },
+
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: "center",
+    paddingTop: 60,
+    paddingBottom: 40,
   },
 });

@@ -15,10 +15,10 @@ export default function LanguageModal() {
               key={l}
               style={[
                 styles.option,
-                 styles.selected
+                lang === l && styles.selected
               ]}
               onPress={() => {
-               
+                setLang(l);
                 close();
               }}
             >

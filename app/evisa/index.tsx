@@ -144,12 +144,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   info: {
-    color: "#FFD700",
+    color: "#f4f0ddff",
     textAlign: "center",
     marginBottom: 6,
   },
   sectionTitle: {
-    color: "#FFD700",
+    color: "#efebd8ff",
     fontSize: 16,
     textAlign: "center",
     marginBottom: 14,
@@ -162,7 +162,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   button: {
-    backgroundColor: "#FFD700",
+    backgroundColor: "#efecddff",
     paddingVertical: 14,
     borderRadius: 14,
     marginTop: 16,
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   warning: {
-    color: "#FFD700",
+    color: "#f6f3e1ff",
     textAlign: "center",
     marginTop: 10,
   },

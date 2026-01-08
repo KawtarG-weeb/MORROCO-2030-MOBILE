@@ -1,6 +1,6 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 
-type Language = 'AR' | 'FR' | 'EN';
+type Language = 'ar' | 'fr' | 'en';
 
 interface LanguageContextType {
   lang: Language;
@@ -25,7 +25,7 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  const [lang, setLang] = useState<Language>('FR');
+  const [lang, setLang] = useState<Language>('fr');
   const [visible, setVisible] = useState(false);
 
   const openLanguageModal = () => setVisible(true);

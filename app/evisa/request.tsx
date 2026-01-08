@@ -65,13 +65,13 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   info: {
-    color: "#FFD700",
+    color: "#e4e0cbff",
     fontSize: 14,
     textAlign: "center",
     marginBottom: 6,
   },
   button: {
-    backgroundColor: "#FFD700",
+    backgroundColor: "#ebe7d4ff",
     paddingVertical: 14,
     borderRadius: 14,
   },

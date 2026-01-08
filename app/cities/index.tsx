@@ -1,7 +1,8 @@
 import { ThemedText } from "@/components/themed-text";
 import { cities } from "@/data/cities";
+import { Image } from "expo-image";
 import { router } from "expo-router";
-import { FlatList, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 
 export default function CitiesScreen() {
   return (
@@ -14,9 +15,31 @@ export default function CitiesScreen() {
           style={styles.card}
           onPress={() => router.push(`/cities/${item.id}`)}
         >
-          <Image source={{ uri: item.image }} style={styles.image} />
-          <ThemedText type="subtitle">{item.name}</ThemedText>
-          <ThemedText>{item.description}</ThemedText>
+          {/* IMAGE */}
+         <Image
+  source={{
+    uri: item.image
+      ? item.image
+      : "https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg",
+  }}
+  style={styles.image}
+  resizeMode="cover"
+/>
+
+
+          {/* TEXTE */}
+          <View style={styles.content}>
+            <ThemedText
+  type="subtitle"
+  style={{ color: "#000" }}
+>
+  {item.name}
+</ThemedText>
+
+            <ThemedText style={styles.description} numberOfLines={3}>
+              {item.description}
+            </ThemedText>
+          </View>
         </TouchableOpacity>
       )}
     />
@@ -25,13 +48,30 @@ export default function CitiesScreen() {
 
 const styles = StyleSheet.create({
   card: {
-    marginBottom: 16,
-    borderRadius: 14,
+    backgroundColor: "#fefffcff",
+    borderRadius: 16,
+    marginBottom: 20,
     overflow: "hidden",
-    backgroundColor: "#fff",
+    elevation: 3,
   },
+
   image: {
-    width: "100%",
-    height: 160,
+  width: "100%",
+  height: 180,
+  borderTopLeftRadius: 14,
+  borderTopRightRadius: 14,
+},
+
+  content: {
+    padding: 14,
+  },
+
+  title: {
+    marginBottom: 20,
+  },
+
+  description: {
+    color: "#131111ff",
+    lineHeight: 20,
   },
 });

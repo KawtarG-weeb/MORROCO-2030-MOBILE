@@ -25,7 +25,7 @@ export default function ServicesScreen() {
           <Text style={styles.cardText}>Villes Hôtes</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity
+        <TouchableOpacity 
           style={styles.serviceCard}
           onPress={() => router.push("/itinerary")}
         >
